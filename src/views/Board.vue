@@ -35,7 +35,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState(['board'])
+  computed: mapState(['board']),
 }
 </script>
 
