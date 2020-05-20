@@ -10,7 +10,20 @@ const board = JSON.parse(localStorage.getItem('board')) || defaultBoard
 export default new Vuex.Store({
   plugins: [saveStatePlugin],
   state: {
-    board
+    board,
   },
-  mutations: {}
+  getters: {
+    getTask(state) {
+      return (id) => {
+        for (const column of state.board.columns) {
+          for (const task of column.tasks) {
+            if (task.id === 'abcde') {
+              return task
+            }
+          }
+        }
+      }
+    },
+  },
+  mutations: {},
 })
