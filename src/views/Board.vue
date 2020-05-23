@@ -38,13 +38,22 @@
               {{ task.description }}
             </p>
           </div>
+          <input
+            type="text"
+            class="block p-2 w-full bg-transparent"
+            placeholder="+ Enter new task"
+            @keyup.enter="createTask($event, column.tasks)"
+          />
         </div>
+      </div>
 
+      <div class="column flex">
         <input
+          v-model="newColumnName"
           type="text"
-          class="block p-2 w-full bg-transparent"
-          placeholder="+ Enter new task"
-          @keyup.enter="createTask($event, column.tasks)"
+          class="p-2 mr-2 flex-grow"
+          placeholder="New Column Name"
+          @keyup.enter="createColumn"
         />
       </div>
     </div>
@@ -59,6 +68,11 @@
 import { mapState } from 'vuex'
 
 export default {
+  data() {
+    return {
+      newColumnName: '',
+    }
+  },
   computed: {
     ...mapState(['board']),
     isTaskOpen() {
@@ -78,6 +92,13 @@ export default {
         name: event.target.value,
       })
       event.target.value = ''
+    },
+    createColumn() {
+      this.$store.commit('CREATE_COLUMN', {
+        name: this.newColumnName,
+      })
+
+      this.newColumnName = ''
     },
     pickupTask(e, taskIndex, fromColumnIndex) {
       e.dataTransfer.effectAllowed = 'move'
